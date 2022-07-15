@@ -86,7 +86,7 @@ export const constantRoutes = [
   
   },
 
-  // 404 page must be placed at the end !!!
+  // 404 page must be placed at the end !!! 什么情况
   { path: '*', redirect: '/404', hidden: true }
 ]
 

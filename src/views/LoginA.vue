@@ -8,7 +8,7 @@
         <span style="color: white">注册</span>
       </template>
     </van-nav-bar>
-    <!--  -->
+    <!-- 哈哈哈哈 -->
     <!-- 用户注册区 -->
     <van-form>
       <van-field name="uploader" label="上传头像">

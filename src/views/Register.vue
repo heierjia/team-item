@@ -11,7 +11,7 @@
     <!--  -->
     <!-- <div class="icon-back" @click="tologin">
       <van-icon size="25" name="arrow-left" />
-    </div>
+    </div>11111
     <div> 
       <p>注册</p>
     </div> -->

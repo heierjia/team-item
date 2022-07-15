@@ -1,21 +1,11 @@
 <template>
   <div>
-    <van-nav-bar @click.native="tologin" style="background-color: #3090ec" :border="false">
-      <template #left>
-        <van-icon style="font-size: 20px" color="white" name="arrow-left" />
-      </template>
-      <template #title>
-        <span style="color: white">注册</span>
-      </template>
-    </van-nav-bar>
-    <!--  -->
-    <!-- <div class="icon-back" @click="tologin">
+    <div class="icon-back" @click="tologin">
       <van-icon size="25" name="arrow-left" />
     </div>
     <div>
       <p>注册</p>
-    </div> -->
-    <!-- 用户注册区 -->
+    </div>
     <van-form>
       <van-field name="uploader" label="上传头像">
         <template #input>
@@ -23,30 +13,69 @@
         </template>
       </van-field>
       <van-cell-group>
-        <van-field v-model="phone" required label="手机号" placeholder="请输入手机号" :rules="[
+        <van-field
+          v-model="phone"
+          required
+          label="手机号"
+          placeholder="请输入手机号"
+          :rules="[
             { required: true },
             { pattern: /^1[3456789]\d{9}$/, message: '手机号码格式错误！' },
-          ]" />
-        <van-field v-model="sms" center clearable label="短信验证码" placeholder="请输入短信验证码">
+          ]"
+        />
+        <van-field
+          v-model="sms"
+          center
+          clearable
+          label="短信验证码"
+          placeholder="请输入短信验证码"
+        >
           <template #button>
             <van-button size="small" type="primary">发送验证码</van-button>
           </template>
         </van-field>
-        <van-field v-model="password" required type="password" label="密码" placeholder="请输入密码" />
-        <van-field v-model="password1" required type="password" label="确认密码" placeholder="请再次输入密码" />
+        <van-field
+          v-model="password"
+          required
+          type="password"
+          label="密码"
+          placeholder="请输入密码"
+        />
+        <van-field
+          v-model="password1"
+          required
+          type="password"
+          label="确认密码"
+          placeholder="请再次输入密码"
+        />
       </van-cell-group>
-      <van-field readonly clickable name="picker" :value="value" label="选择地区" placeholder="点击选择城市" @click="showPicker = true" />
+      <van-field
+        readonly
+        clickable
+        name="picker"
+        :value="value"
+        label="选择地区"
+        placeholder="点击选择城市"
+        @click="showPicker = true"
+      />
       <van-popup v-model="showPicker" position="bottom">
-        <van-picker show-toolbar :columns="columns" @confirm="onConfirm" @cancel="showPicker = false" />
+        <van-picker
+          show-toolbar
+          :columns="columns"
+          @confirm="onConfirm"
+          @cancel="showPicker = false"
+        />
       </van-popup>
     </van-form>
     <div style="margin: 16px">
-      <van-button round block type="info" native-type="submit" @click="onsubmit">
-        注册
-      </van-button>
+      <van-button round block type="info" native-type="submit" @click="onsubmit"
+        >注册</van-button
+      >
     </div>
     <div style="float: center">
-      <router-link to="/login" style="color: #aaa">已有账号,立即登录</router-link>
+      <router-link to="/login" style="color: #aaa"
+        >已有账号,立即登录</router-link
+      >
     </div>
   </div>
 </template>
@@ -60,17 +89,9 @@ export default {
       sms: "",
       password: "",
       password1: "",
-      uploader: [{ url: "https://img01.yzcdn.cn/vant/cat.jpeg" }],
+      uploader: [{ url: "https://img01.yzcdn.cn/vant/leaf.jpg" }],
       value: "",
-      columns: [
-        "福田区",
-        "罗湖区",
-        "龙岗区",
-        "龙华区",
-        "宝安区",
-        "光明区",
-        "南山区",
-      ],
+      columns: ["城中区", "鱼峰区", "柳南区", "柳北区", "柳江区"],
       showPicker: false,
     };
   },
@@ -96,7 +117,7 @@ export default {
         Toast.success("注册成功");
         this.$notify({
           type: "success",
-          message: "注册成功,3s后返回登录",
+          message: "注册成功，3s后返回登录",
           duration: 3000,
         });
         setTimeout(() => {

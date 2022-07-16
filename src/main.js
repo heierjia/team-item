@@ -5,7 +5,10 @@ import 'normalize.css/normalize.css' // A modern alternative to CSS resets
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import locale from 'element-ui/lib/locale/lang/en' // lang i18n
-
+ //axios
+ import axios from "axios"
+import VueAxios from "vue-axios"
+Vue.use(VueAxios, axios)
 import '@/styles/index.scss' // global css
 
 import App from './App'
@@ -14,6 +17,10 @@ import router from './router'
 
 import '@/icons' // icon
 import '@/permission' // permission control
+
+
+
+
 
 /**
  * If you don't want to use mock-server
@@ -34,7 +41,9 @@ Vue.use(ElementUI, { locale })
 // Vue.use(ElementUI)
 
 Vue.config.productionTip = false
-
+// 引入相关API请求接口
+// import API from '@/api'
+// Vue.prototype.$API=API
 new Vue({
   el: '#app',
   router,

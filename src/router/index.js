@@ -6,6 +6,16 @@ Vue.use(VueRouter)
 
 const routes = [
   {
+    path: '/tabbr',
+    name: 'tabbr',
+    component: () => import('../views/Tabbr.vue'),
+  },
+  {
+    path: '/header',
+    name: 'header',
+    component: () => import('../views/Header.vue'),
+  },
+  {
     path: '/',
     name: 'home',
     component: HomeView

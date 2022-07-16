@@ -5,7 +5,7 @@ import store from '@/store'
 export const getUserInfo = () => {
   return request({
     method: 'GET',
-    url: '/app/v1_0/user',
+    url: 'http://127.0.0.1:3000/v2/user/getinfo?uname=yaya',
     // 发送请求头数据
    // headers: {
       // 注意：该接口需要授权才能访问

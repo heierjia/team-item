@@ -1,14 +1,20 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Personal from '../views/Personal/Personal.vue'
+import Home from '../components/HelloWorld.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
+    path: '/',
+    name: 'home',
+    component: Home,
+    redirect: '/personal'
+  },
+  {
     path: '/personal',
     name: 'home',
-    component: Personal,
+    component: () => import('../views/Personal/Personal.vue')
     // children:[{
     //   path:'info',
     //   component: () => import('../views/Personal/Info.vue'),
@@ -24,6 +30,16 @@ const routes = [
   name: 'avatar',
   component: () => import('../views/Personal/Avatar.vue'),
  },
+ {
+  path: "/login",
+  name: "登录",
+  component: () => import("../views/Login.vue"),
+},
+{
+  path: "/register",
+  name: "注册",
+  component: () => import("../views/Register.vue"),
+},
 ]
 
 const router = new VueRouter({

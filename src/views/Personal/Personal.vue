@@ -8,25 +8,26 @@
           <van-icon name="setting-o" size="30" color="#000" />
         </template>
       </van-nav-bar>
-      <div class="header-top">
+      <div class="header-top" v-for="item in userInfo" :key="item.id">
         <div class="left">
           <van-image
-            v-if="!userInfo.avater"
-            src="/001.png"
+            v-if="item.avatar"
+            :src="item.avatar"
             fit="fill"
             round
             class="img-tx"
             @click="$router.push('/info')"
           />
-          <!-- <div v-if="!userInfo.avater" class="img-tx">点击上传头像</div> -->
+          <div v-else class="img-tx">点击上传头像</div>
           <div>
-            <span class="name">{{ userInfo.name }}</span>
-            <span class="name">温柔的心xx</span>
+            <span class="name">{{ item.user_name }}</span>
             <van-button size="mini" round>+ 状态</van-button>
           </div>
         </div>
         <div class="right">
-          <van-button size="mini" round @click="$router.push('/info')">编辑资料</van-button>
+          <van-button size="mini" round @click="$router.push('/info')"
+            >编辑资料</van-button
+          >
         </div>
       </div>
       <div class="data-stats">
@@ -53,36 +54,52 @@
   </div>
 </template>
 <script>
-import { getUserInfo } from "@/api/user";
-import { mapState } from "vuex";
+// import { getUserInfo } from "@/api/user";
+import { mapMutations, mapState } from "vuex";
 export default {
   data() {
     return {
-      userInfo: {}, // 用户信息
+      userInfo: [], // 用户信息
     };
   },
   computed: {
     ...mapState(["user"]),
   },
   watch: {},
-  created() {
-    // 初始化的时候，如果用户登录了，我才请求获取当前登录用户的信息
-    if (this.$store.state.user) {
-      this.loadUser();
-    }
+  // created() {
+  //   // 初始化的时候，如果用户登录了，我才请求获取当前登录用户的信息
+  //   if (this.$store.state.user) {
+  //     this.getUserInfo();
+  //   }
+  // },
+  mounted() {
+    // location.reload();
+    this.getUserInfo();
   },
-  mounted() {},
   methods: {
-    async loadUser() {
-      try {
-        const { data } = await getUserInfo();
-        this.user = data.data;
-      } catch (err) {
-        console.log(err);
-        this.$toast("获取数据失败");
+    ...mapMutations(["saveUsername"]),
+    // async loadUser() {
+    //   try {
+    //     const { data } = await getUserInfo();
+    //     this.user = data.data;
+    //   } catch (err) {
+    //     console.log(err);
+    //     this.$toast("获取数据失败");
+    //   }
+    // },
+    getUserInfo() {
+      let user = this.$store.state.user;
+      if (!user) {
+        this.$router.push("/login");
       }
+      let url = `http://127.0.0.1:3000/v2/user/getinfo?uname=${user}`;
+      this.axios.get(url).then((res) => {
+        console.log(res);
+        this.userInfo = res.data.data;
+        this.$store.commit("userInfo",this.userInfo);
+      });
     },
-    // 点击退出登录
+    // 点击退出登录x
     onLogout() {
       // 退出提示
       // 在组件中需要使用 this.$dialog 来调用弹框组件
@@ -91,7 +108,9 @@ export default {
           title: "是否确认退出",
         })
         .then(() => {
-          this.$store.commit("setUser", null);
+          this.$store.commit("saveUsername", null);
+          sessionStorage.removeItem("user");
+          this.$router.push("/login");
         })
         .catch((err) => {
           // console.log("取消了执行");
@@ -125,8 +144,8 @@ export default {
       }
       .name {
         display: block;
+        font-weight: 600;
         font-size: 1.4rem;
-        color: rgb(146, 57, 57);
         line-height: 5rem;
       }
     }

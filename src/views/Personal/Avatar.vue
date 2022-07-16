@@ -1,6 +1,10 @@
 <template>
   <div>
-    <van-uploader v-model="fileList" multiple />
+     <van-field name="uploader" label="上传头像" center>
+        <template #input>
+          <van-uploader v-model="uploader" />
+        </template>
+      </van-field>
   </div>
 </template>
 
@@ -12,7 +16,6 @@ export default {
         { url: "https://img01.yzcdn.cn/vant/leaf.jpg" },
         // Uploader 根据文件后缀来判断是否为图片文件
         // 如果图片 URL 中不包含类型信息，可以添加 isImage 标记来声明
-        { url: "https://cloud-image", isImage: true },
       ],
     };
   },

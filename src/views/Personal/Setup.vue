@@ -1,8 +1,8 @@
 <template>
   <div>
-    <van-nav-bar @click.native="$router.push('/personal')"  :border="false">
+    <van-nav-bar :border="false">
       <template #left>
-        <van-icon style="font-size: 20px" color="black" name="arrow-left" />
+        <van-icon style="font-size: 20px" color="black" name="arrow-left" @click.native="$router.push('/personal')"  />
       </template>
       <template #title>
         <span style="color: black">设置</span>

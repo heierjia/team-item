@@ -1,32 +1,38 @@
 <template>
   <div>
-     <van-field name="uploader" label="上传头像" center>
-        <template #input>
-          <van-uploader v-model="uploader" />
-        </template>
-      </van-field>
+    <van-uploader :before-read="beforeRead" />
   </div>
 </template>
 
 <script>
 export default {
-  data() {
-    return {
-      fileList: [
-        { url: "https://img01.yzcdn.cn/vant/leaf.jpg" },
-        // Uploader 根据文件后缀来判断是否为图片文件
-        // 如果图片 URL 中不包含类型信息，可以添加 isImage 标记来声明
-      ],
-    };
-  },
-    methods: {
-    onOversize(file) {
-      console.log(file);
-      Toast('文件大小不能超过 500kb');
+  methods: {
+    // 返回布尔值
+    beforeRead(file) {
+      if (file.type !== 'image/jpeg') {
+        Toast('请上传 jpg 格式图片');
+        return false;
+      }
+      return true;
+    },
+    // 返回 Promise
+    asyncBeforeRead(file) {
+      return new Promise((resolve, reject) => {
+        if (file.type !== 'image/jpeg') {
+          Toast('请上传 jpg 格式图片');
+          reject();
+        } else {
+          let img = new File(['foo'], 'bar.jpg', {
+            type: 'image/jpeg',
+          });
+          resolve(img);
+        }
+      });
     },
   },
 };
 </script>
 
 <style lang="scss" scoped>
+
 </style>

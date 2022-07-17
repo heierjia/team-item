@@ -26,7 +26,7 @@ const routes = [
   component: () => import('../views/Personal/Info.vue'),
  },
  {
-  path: 'avatar',
+  path: '/avatar',
   name: 'avatar',
   component: () => import('../views/Personal/Avatar.vue'),
  },
@@ -39,6 +39,21 @@ const routes = [
   path: "/register",
   name: "注册",
   component: () => import("../views/Register.vue"),
+},
+{
+  path: '/message',
+  name: 'message',
+  component: () => import('../views/Personal/Message.vue'),
+},
+{
+  path: '/systeminforms',
+  name: 'systeminforms',
+  component: () => import('../views/Personal/Message/SystemInforms.vue'),
+},
+{
+  path: '/setup',
+  name: 'setup',
+  component: () => import('../views/Personal/Setup.vue'),
 },
 ]
 

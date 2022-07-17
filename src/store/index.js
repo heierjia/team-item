@@ -22,6 +22,14 @@ export default new Vuex.Store({
       state.user = payload
       sessionStorage.setItem('user',payload)
     },
+    onRefresh() {
+      setTimeout(() => {
+        Toast('刷新成功');
+        this.isLoading = false;
+        this.count++;
+      }, 1000);
+    },
+  
   },
   actions: {
   },

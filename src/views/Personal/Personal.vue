@@ -3,9 +3,9 @@
     <div class="header">
       <van-nav-bar>
         <template #right>
-          <van-icon name="bullhorn-o" size="30" color="#000" />
+          <van-icon name="bullhorn-o" size="30" color="#000" @click.native.prevent="$router.push('/message')"/>
           <span>&nbsp;&nbsp;&nbsp;</span>
-          <van-icon name="setting-o" size="30" color="#000" />
+          <van-icon name="setting-o" size="30" color="#000" @click.native.prevent="$router.push('/setup')"/>
         </template>
       </van-nav-bar>
       <div class="header-top" v-for="item in userInfo" :key="item.id">
@@ -125,8 +125,8 @@ export default {
 <style scoped lang="scss">
 .my-container {
   .header-top {
-    height: 231px;
-    padding: 10px 15px 15px;
+    height: 200px;
+    padding: 10px 10px 15px;
     box-sizing: border-box;
     display: flex;
     justify-content: space-between;

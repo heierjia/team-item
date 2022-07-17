@@ -92,10 +92,11 @@ export default {
       if (!user) {
         this.$router.push("/login");
       }
-      let url = `http://127.0.0.1:3000/v2/user/getinfo?uname=${user}`;
+      // let url = `http://127.0.0.1:3000/v2/user/getinfo?uname=${user}`;
+      let url = '/Data/userInfo.json'
       this.axios.get(url).then((res) => {
         console.log(res);
-        this.userInfo = res.data.data;
+        this.userInfo = res.data;
         this.$store.commit("userInfo",this.userInfo);
       });
     },

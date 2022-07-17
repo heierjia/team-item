@@ -69,11 +69,9 @@
         </van-button>
       </div>
     </van-form>
-    <div style="float: center">
-      <router-link to="/register" style="color: #aaa"
-        >没有账号？点击注册</router-link
-      >
-    </div>
+    <router-link to="/register" content-position="center" style="color: #aaa">
+      没有账号？点击注册
+    </router-link>
   </div>
 </template>
 

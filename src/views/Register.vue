@@ -1,6 +1,10 @@
 <template>
   <div>
-    <van-nav-bar @click.native="tologin" style="background-color: #3090ec" :border="false">
+    <van-nav-bar
+      @click.native="tologin"
+      style="background-color: #3090ec"
+      :border="false"
+    >
       <template #left>
         <van-icon style="font-size: 20px" color="white" name="arrow-left" />
       </template>
@@ -19,28 +23,90 @@
       <!--  -->
       <van-cell-group>
         <!-- 手机号码验证 -->
-        <van-field label="手机号" v-model="phone" center required placeholder="请输入手机号" :border="true" />
-        <van-field v-model="sms" center required clearable label="验证码" placeholder="请输入验证码" :border="false" use-button-slot>
-          <van-button slot="button" size="small" type="primary" @click="gainCode">{{time}}</van-button>
+        <van-field
+          label="手机号"
+          v-model="phone"
+          center
+          required
+          placeholder="请输入手机号"
+          :border="true"
+        />
+        <van-field
+          v-model="sms"
+          center
+          required
+          clearable
+          label="验证码"
+          placeholder="请输入6位验证码"
+          :border="false"
+          use-button-slot
+        >
+          <van-button
+            slot="button"
+            size="small"
+            type="primary"
+            @click="gainCode"
+            >{{ time }}</van-button
+          >
         </van-field>
         <!-- 密码确认 -->
-        <van-field v-model="password" required type="password" label="密码" placeholder="请输入密码" />
-        <van-field v-model="password1" required type="password" label="确认密码" placeholder="请再次输入密码" />
+        <van-field
+          v-model="password"
+          required
+          type="password"
+          label="密码"
+          placeholder="请输入密码"
+        />
+        <van-field
+          v-model="password1"
+          required
+          type="password"
+          label="确认密码"
+          placeholder="请再次输入密码"
+        />
       </van-cell-group>
       <!-- 城市选择 -->
-      <van-field readonly clickable name="picker" :value="value" label="选择地区" placeholder="点击选择城市" @click="showPicker = true" />
+      <van-field
+        readonly
+        clickable
+        name="picker"
+        :value="value"
+        label="选择地区"
+        placeholder="点击选择城市"
+        @click="showPicker = true"
+      />
       <van-popup v-model="showPicker" position="bottom">
-        <van-picker show-toolbar :columns="columns" @confirm="onConfirm" @cancel="showPicker = false" />
+        <van-picker
+          show-toolbar
+          :columns="columns"
+          @confirm="onConfirm"
+          @cancel="showPicker = false"
+        />
       </van-popup>
     </van-form>
+    <!-- 同意协议 勾选框 -->
+    <input type="CheckBox" name="test" checked />
+    <span style="color: #ccc; font-size: 10px">我已阅读并同意</span>
+    <span style="color: #009aef; font-size: 10px" size="mini">
+      《用户服务协议》
+    </span>
+    <span style="color: #ccc; font-size: 10px">及</span>
+    <span style="color: #009aef; font-size: 10px">《隐私服务》 </span>
+    <!-- 注册按钮 -->
     <div style="margin: 16px">
-      <van-button round block type="info" native-type="submit" @click="onsubmit">
+      <van-button
+        round
+        block
+        type="info"
+        native-type="submit"
+        @click="onsubmit"
+      >
         注册
       </van-button>
     </div>
-    <div style="float: center">
-      <router-link to="/login" style="color: #aaa">已有账号,立即登录</router-link>
-    </div>
+    <router-link to="/login" content-position="center" style="color: #aaa">
+      已有账号,立即登录
+    </router-link>
   </div>
 </template>
 
@@ -52,7 +118,7 @@ export default {
       phone: "",
       sms: "",
       isClick: true,
-      time: '获取验证码',
+      time: "获取验证码",
       password: "",
       password1: "",
       uploader: [{ url: "https://img01.yzcdn.cn/vant/cat.jpeg" }],
@@ -73,22 +139,26 @@ export default {
     // 获取验证码
     async gainCode() {
       if (this.isClick) {
-        if (/^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/.test(this.phone)) {
+        if (
+          /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/.test(
+            this.phone
+          )
+        ) {
           // const res = await sendVerifyCode({ phone: this.phone })  // 获取验证码接口
-          this.isClick = false
-          let s = 60
-          this.time = s + 's'
+          this.isClick = false;
+          let s = 60;
+          this.time = s + "s";
           let interval = setInterval(() => {
-            s--
-            this.time = s + 's'
+            s--;
+            this.time = s + "s";
             if (s < 0) {
-              this.time = '重新获取'
-              this.isClick = true
-              clearInterval(interval)
+              this.time = "重新获取";
+              this.isClick = true;
+              clearInterval(interval);
             }
-          }, 1000)
+          }, 1000);
         } else {
-          Toast.fail('请输入正确的手机号码')
+          Toast.fail("请输入正确的手机号码");
         }
       }
     },

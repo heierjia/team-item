@@ -42,9 +42,9 @@
     </div>
     <!-- 单元格组件 -->
     <van-cell title="更多服务" style="font-size: 20px" />
-    <van-cell title="我的数字藏品" is-link />
-    <van-cell title="我的钱包" is-link />
-    <van-cell title="在线客服" is-link />
+    <van-cell title="我的数字藏品" is-link to="/MyDigitalCollection"/>
+    <van-cell title="我的钱包" is-link to="/MyPurse"/>
+    <van-cell title="在线客服" is-link to="/OnlineService"/>
     <van-cell
       class="logout-cell"
       clickable

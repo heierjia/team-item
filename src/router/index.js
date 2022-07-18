@@ -26,11 +26,6 @@ const routes = [
   component: () => import('../views/Personal/Info.vue'),
  },
  {
-  path: '/avatar',
-  name: 'avatar',
-  component: () => import('../views/Personal/Avatar.vue'),
- },
- {
   path: "/login",
   name: "登录",
   component: () => import("../views/Login.vue"),
@@ -43,7 +38,7 @@ const routes = [
 {
   path: '/message',
   name: 'message',
-  component: () => import('../views/Personal/Message.vue'),
+  component: () => import('../views/Personal/Message/Message.vue'),
 },
 {
   path: '/systeminforms',
@@ -51,9 +46,54 @@ const routes = [
   component: () => import('../views/Personal/Message/SystemInforms.vue'),
 },
 {
+  path: '/transaction',
+  name: 'transaction',
+  component: () => import('../views/Personal/Message/TransactionNotice.vue'),
+},
+{
+  path: '/eventnotif',
+  name: 'eventnotif',
+  component: () => import('../views/Personal/Message/EventNotification.vue'),
+},
+{
   path: '/setup',
   name: 'setup',
-  component: () => import('../views/Personal/Setup.vue'),
+  component: () => import('../views/Personal/setup/Setup.vue'),
+},
+{
+  path: '/AccountSecurity',
+  name: 'AccountSecurity',
+  component: () => import('../views/Personal/setup/AccountSecurity.vue'),
+},
+{
+  path: '/NewMessages',
+  name: 'NewMessages',
+  component: () => import('../views/Personal/setup/NewMessages.vue'),
+},
+{
+  path: '/general',
+  name: 'general',
+  component: () => import('../views/Personal/setup/General.vue'),
+},
+{
+  path: '/guany',
+  name: 'guany',
+  component: () => import('../views/Personal/setup/Guany.vue'),
+},
+{
+  path: '/MyDigitalCollection',
+  name: 'MyDigitalCollection',
+  component: () => import('../views/Personal/MyDigitalCollection.vue'),
+},
+{
+  path: '/MyPurse',
+  name: 'MyPurse',
+  component: () => import('../views/Personal/MyPurse.vue'),
+},
+{
+  path: '/OnlineService',
+  name: 'OnlineService',
+  component: () => import('../views/Personal/OnlineService.vue'),
 },
 ]
 

@@ -15,9 +15,10 @@
     <!--  -->
     <!-- 用户注册区 -->
     <van-form>
+      <!-- 头像上传 -->
       <van-field name="uploader" label="上传头像">
         <template #input>
-          <van-uploader v-model="uploader" />
+          <van-uploader :max-count="1" v-model="uploader" />
         </template>
       </van-field>
       <!--  -->

@@ -21,21 +21,6 @@ const routes = [
     component: () => import("../views/Register.vue"),
   },
   {
-    path: "/test",
-    name: "routeName",
-    component: () => import("../views/Test.vue"),
-  },
-  {
-    path: "/logina",
-    name: "登录",
-    component: () => import("../views/LoginA.vue"),
-  },
-  {
-    path: "/registera",
-    name: "注册 测试",
-    component: () => import("../views/RegisterA.vue"),
-  },
-  {
     path: "/message",
     name: "消息",
     component: () => import("../views/Message.vue"),

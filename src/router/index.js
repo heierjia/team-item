@@ -20,12 +20,7 @@ const routes = [
     name: "注册",
     component: () => import("../views/Register.vue"),
   },
-  {
-    path: "/message",
-    name: "消息",
-    component: () => import("../views/Message.vue"),
-  },
-];
+ ];
 
 const router = new VueRouter({
   mode: "history",

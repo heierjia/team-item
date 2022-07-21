@@ -1,17 +1,19 @@
-import Vue from "vue";
-import App from "./App.vue";
-import router from "./router";
-import store from "./store";
-
-//引入vant
-import Vant from "vant";
-import "../node_modules/vant/lib/index.css";
+import Vue from 'vue'
+import App from './App.vue'
+import router from './router'
+import store from './store'
+import axios from 'axios'
+import VueAxios from 'vue-axios';
+import Vant from 'vant';
+import 'vant/lib/index.css';
+import moment from 'moment'
+Vue.prototype.moment = moment
+Vue.use(VueAxios, axios)
 Vue.use(Vant);
-
-Vue.config.productionTip = false;
+Vue.config.productionTip = false
 
 new Vue({
   router,
   store,
-  render: (h) => h(App),
-}).$mount("#app");
+  render: h => h(App)
+}).$mount('#app')

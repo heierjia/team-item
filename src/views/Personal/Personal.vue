@@ -3,9 +3,19 @@
     <div class="header">
       <van-nav-bar>
         <template #right>
-          <van-icon name="bullhorn-o" size="30" color="#000" @click.native.prevent="$router.push('/message')"/>
+          <van-icon
+            name="bullhorn-o"
+            size="30"
+            color="#000"
+            @click.native.prevent="$router.push('/message')"
+          />
           <span>&nbsp;&nbsp;&nbsp;</span>
-          <van-icon name="setting-o" size="30" color="#000" @click.native.prevent="$router.push('/setup')"/>
+          <van-icon
+            name="setting-o"
+            size="30"
+            color="#000"
+            @click.native.prevent="$router.push('/setup')"
+          />
         </template>
       </van-nav-bar>
       <div class="header-top" v-for="item in userInfo" :key="item.id">
@@ -42,9 +52,9 @@
     </div>
     <!-- 单元格组件 -->
     <van-cell title="更多服务" style="font-size: 20px" />
-    <van-cell title="我的数字藏品" is-link to="/MyDigitalCollection"/>
-    <van-cell title="我的钱包" is-link to="/MyPurse"/>
-    <van-cell title="在线客服" is-link to="/OnlineService"/>
+    <van-cell title="我的数字藏品" is-link to="/MyDigitalCollection" />
+    <van-cell title="我的钱包" is-link to="/MyPurse" />
+    <van-cell title="在线客服" is-link to="/OnlineService" />
     <van-cell
       class="logout-cell"
       clickable
@@ -92,12 +102,12 @@ export default {
       if (!user) {
         this.$router.push("/login");
       }
-      // let url = `http://127.0.0.1:3000/v2/user/getinfo?uname=${user}`;
-      let url = '/Data/userInfo.json'
+      let url = `http://127.0.0.1:8080/v2/user/getinfo?user=${user}`;
+      // let url = '/Data/userInfo.json'
       this.axios.get(url).then((res) => {
         console.log(res);
         this.userInfo = res.data;
-        this.$store.commit("userInfo",this.userInfo);
+        this.$store.commit("userInfo", this.userInfo);
       });
     },
     // 点击退出登录x

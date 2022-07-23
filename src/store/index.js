@@ -6,8 +6,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     // user:sessionStorage.getItem('user'),
-    user:'yaya',
-    userInfo:[],
+    user: 'yaya',
+    userInfo: [],
     // sex:'女',
     // phone:13333333333,
     // email:'123@qq.com',
@@ -15,12 +15,12 @@ export default new Vuex.Store({
   getters: {
   },
   mutations: {
-    userInfo(state,info){
+    userInfo(state, info) {
       state.userInfo = info
     },
-    saveUsername(state,payload){
+    saveUsername(state, payload) {
       state.user = payload
-      sessionStorage.setItem('user',payload)
+      sessionStorage.setItem('user', payload)
     },
     onRefresh() {
       setTimeout(() => {
@@ -29,7 +29,7 @@ export default new Vuex.Store({
         this.count++;
       }, 1000);
     },
-  
+
   },
   actions: {
   },

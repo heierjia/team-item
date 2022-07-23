@@ -190,8 +190,8 @@ export default {
           message: "注册成功,3s后返回登录",
           duration: 3000,
         });
+        sessionStorage.setItem("saveUsername", this.phone);
         setTimeout(() => {
-          sessionStorage.clear("regis");
           this.$router.go(-1);
         }, 3000);
       }

@@ -49,11 +49,7 @@
         ]"
       >
         <template #right-icon>
-          <span
-            @click="onPassword"
-            style="font-size: 20px"
-            class="iconfont icon-view"
-          ></span>
+          <van-icon name="eye-o"  @click="onPassword"/>
         </template>
       </van-field>
 
@@ -155,5 +151,9 @@ export default {
 <style scoped>
 #login {
   text-align: center;
+}
+.iconfont {
+  background-color: brown;
+  color: red;
 }
 </style>

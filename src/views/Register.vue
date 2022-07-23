@@ -25,7 +25,15 @@
       <van-cell-group>
         <!-- 手机号码验证 -->
         <van-field
-          @blur.native.capture="check_phone"
+          label="用户名"
+          v-model="name"
+          center
+          required
+          placeholder="请输入用户名"
+          :border="true"
+        />
+        <van-field
+          @blur.native.capture="check_user"
           label="手机号"
           v-model="phone"
           center
@@ -117,13 +125,14 @@ import { Toast } from "vant";
 export default {
   data() {
     return {
+      name: "",
       phone: "",
       sms: "",
       isClick: true,
       time: "获取验证码",
       password: "",
       password1: "",
-      uploader: [{ url: "https://img01.yzcdn.cn/vant/cat.jpeg" }],
+      uploader: [],
       value: "",
       columns: [
         "福田区",
@@ -174,39 +183,66 @@ export default {
       this.$router.go(-1);
     },
     //检查用户名
-    check_phone() {
+    check_user() {
       if (this.phone == "") {
         Toast("用户名不能为空");
         this.$notify({ type: "danger", message: "用户名不能为空" });
         return;
       }
-      let url = "http://127.0.0.1:8080/v2/user/check_phone?phone=" + this.phone;
-      this.axios.get(url).then((res) => {
-        console.log(res);
-        if (res.data === "exists") {
-          Toast("用户名已存在");
-          this.$notify({ type: "danger", message: "用户名已存在" });
-          return;
-        }
-      });
+     if (
+        /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/.test(
+          this.phone
+        )
+      ) {
+        let url =
+          "http://127.0.0.1:8080/v2/user/check_phone?phone=" + this.phone;
+        this.axios.get(url).then((res) => {
+          console.log(res);
+          if (res.data === "exists") {
+            Toast("手机号已被注册");
+            this.$notify({ type: "danger", message: "手机号已被注册" });
+          }
+        });
+      } else {
+        Toast.fail("请输入正确的手机号码");
+      }
     },
     // 提交注册
     onsubmit() {
-      if (this.sms == "" || this.password == "" || this.password1 == "") {
+      if (
+        this.name == "" ||
+        this.phone == "" ||
+        this.sms == "" ||
+        this.password == "" ||
+        this.password1 == ""
+      ) {
         Toast("验证失败！信息未完善");
       } else if (this.password != this.password1) {
         Toast("密码输入两次不一致！");
       } else {
         Toast.success("注册成功");
-        this.$notify({
-          type: "success",
-          message: "注册成功,3s后返回登录",
-          duration: 3000,
-        });
-        localStorage.setItem("saveUsername", this.phone);
-        setTimeout(() => {
-          this.$router.go(-1);
-        }, 3000);
+        this.axios
+          .post(
+            "http://127.0.0.1:8080/v2/user/add",
+            `uname=${this.name}&upwd=${this.password}&phone=${this.phone}&avatar=${this.uploader}`
+          )
+          .then((res) => {
+            console.log("注册请求", res);
+            if (res.data.code == 200) {
+              this.$toast({
+                message: "注册完成,跳转登录...",
+              });
+              this.$notify({
+                type: "success",
+                message: "注册成功,3s后返回登录",
+                duration: 3000,
+              });
+              setTimeout(() => {
+                this.$router.go(-1);
+              }, 3000);
+              localStorage.setItem("saveUsername", this.phone);
+            }
+          });
       }
     },
   },

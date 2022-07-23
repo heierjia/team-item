@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="login">
     <!-- views/Login.vue -->
     <!-- vant导航栏 -->
     <van-nav-bar
@@ -87,7 +87,7 @@ export default {
     };
   },
   methods: {
-    tologin() {
+    toregister() {
       this.$router.go(-1);
       console.log(this.$router);
     },
@@ -153,7 +153,7 @@ export default {
 
 <style lang="scss" scoped></style>
 <style scoped>
-/* #login {
-  margin-top: 30vh;
-} */
+#login {
+  text-align: center;
+}
 </style>

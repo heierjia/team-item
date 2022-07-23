@@ -120,7 +120,7 @@ export default {
         })
         .then(() => {
           this.$store.commit("saveUsername", null);
-          sessionStorage.removeItem("user");
+          localStorage.removeItem("user");
           this.$router.push("/login");
         })
         .catch((err) => {

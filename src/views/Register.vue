@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="register">
     <van-nav-bar
       @click.native="tologin"
       style="background-color: #3090ec"
@@ -25,6 +25,7 @@
       <van-cell-group>
         <!-- 手机号码验证 -->
         <van-field
+          @blur.native.capture="check_phone"
           label="手机号"
           v-model="phone"
           center
@@ -84,15 +85,15 @@
           @cancel="showPicker = false"
         />
       </van-popup>
+      <!-- 同意协议 勾选框 -->
+      <input type="CheckBox" name="test" checked />
+      <span style="color: #ccc; font-size: 10px">我已阅读并同意</span>
+      <span style="color: #009aef; font-size: 10px" size="mini">
+        《用户服务协议》
+      </span>
+      <span style="color: #ccc; font-size: 10px">及</span>
+      <span style="color: #009aef; font-size: 10px">《隐私服务》 </span>
     </van-form>
-    <!-- 同意协议 勾选框 -->
-    <input type="CheckBox" name="test" checked />
-    <span style="color: #ccc; font-size: 10px">我已阅读并同意</span>
-    <span style="color: #009aef; font-size: 10px" size="mini">
-      《用户服务协议》
-    </span>
-    <span style="color: #ccc; font-size: 10px">及</span>
-    <span style="color: #009aef; font-size: 10px">《隐私服务》 </span>
     <!-- 注册按钮 -->
     <div style="margin: 16px">
       <van-button
@@ -172,15 +173,27 @@ export default {
     tologin() {
       this.$router.go(-1);
     },
+    //检查用户名
+    check_phone() {
+      if (this.phone == "") {
+        Toast("用户名不能为空");
+        this.$notify({ type: "danger", message: "用户名不能为空" });
+        return;
+      }
+      let url = "http://127.0.0.1:8080/v2/user/check_phone?phone=" + this.phone;
+      this.axios.get(url).then((res) => {
+        console.log(res);
+        if (res.data === "exists") {
+          Toast("用户名已存在");
+          this.$notify({ type: "danger", message: "用户名已存在" });
+          return;
+        }
+      });
+    },
     // 提交注册
     onsubmit() {
-      if (
-        this.phone == "" ||
-        this.sms == "" ||
-        this.password == "" ||
-        this.password1 == ""
-      ) {
-        Toast("注册失败！信息未完善");
+      if (this.sms == "" || this.password == "" || this.password1 == "") {
+        Toast("验证失败！信息未完善");
       } else if (this.password != this.password1) {
         Toast("密码输入两次不一致！");
       } else {
@@ -190,7 +203,7 @@ export default {
           message: "注册成功,3s后返回登录",
           duration: 3000,
         });
-        sessionStorage.setItem("saveUsername", this.phone);
+        localStorage.setItem("saveUsername", this.phone);
         setTimeout(() => {
           this.$router.go(-1);
         }, 3000);
@@ -201,6 +214,9 @@ export default {
 </script>
 
 <style scoped>
+#register {
+  text-align: center;
+}
 .icon-back {
   position: absolute;
   left: 2px;

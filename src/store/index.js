@@ -6,9 +6,9 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     // user:sessionStorage.getItem('user'),
-    user: 'yaya',
+    user: '',
     userInfo: [],
-    },
+  },
   getters: {
   },
   mutations: {

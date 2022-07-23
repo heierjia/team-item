@@ -105,7 +105,7 @@ export default {
       }
 
       // 获取数据
-      let users = localStorage.users;
+      let users = localStorage.user;
       if (users) {
         users = JSON.parse(users);
         let isLogin = false;
@@ -121,7 +121,7 @@ export default {
 
         if (isLogin) {
           // sessionStorage.user = this.username;
-          sessionStorage.setItem("name", user);
+          this.$store.commit("user", this.user);
           this.$router.push({
             path: "/personal",
           });

@@ -3,7 +3,7 @@
     <!-- views/Login.vue -->
     <!-- vant导航栏 -->
     <van-nav-bar
-      @click.native.capture="tologin"
+      @click.native.capture="toregister"
       style="background-color: #3090ec"
       :border="false"
     >

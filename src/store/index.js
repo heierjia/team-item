@@ -8,10 +8,7 @@ export default new Vuex.Store({
     // user:sessionStorage.getItem('user'),
     user: 'yaya',
     userInfo: [],
-    // sex:'女',
-    // phone:13333333333,
-    // email:'123@qq.com',
-  },
+    },
   getters: {
   },
   mutations: {

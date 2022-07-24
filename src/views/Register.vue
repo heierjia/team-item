@@ -63,17 +63,29 @@
         <van-field
           v-model="password"
           required
-          type="password"
+          :type="isPassword"
           label="密码"
           placeholder="请输入密码"
-        />
+        >
+          <template #right-icon>
+            <van-icon
+              name="eye-o"
+              @click.native.capture="onPassword"
+            /> </template
+        ></van-field>
         <van-field
           v-model="password1"
           required
-          type="password"
+          :type="isPassword"
           label="确认密码"
           placeholder="请再次输入密码"
-        />
+        >
+          <template #right-icon>
+            <van-icon
+              name="eye-o"
+              @click.native.capture="onPassword"
+            /> </template
+        ></van-field>
       </van-cell-group>
       <!-- 城市选择 -->
       <van-field
@@ -132,6 +144,8 @@ export default {
       time: "获取验证码",
       password: "",
       password1: "",
+      isPassword: "password", //密码的type类型
+      isText: true,
       uploader: [],
       value: "",
       columns: [
@@ -149,12 +163,9 @@ export default {
   methods: {
     // 获取验证码
     async gainCode() {
+      console.log(this.uploader[0].content);
       if (this.isClick) {
-        if (
-          /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/.test(
-            this.phone
-          )
-        ) {
+        if (this.phone) {
           // const res = await sendVerifyCode({ phone: this.phone })  // 获取验证码接口
           this.isClick = false;
           let s = 60;
@@ -169,7 +180,7 @@ export default {
             }
           }, 1000);
         } else {
-          Toast.fail("请输入正确的手机号码");
+          Toast.fail("验证失败,请检查输入的手机号码");
         }
       }
     },
@@ -180,24 +191,23 @@ export default {
     },
     // 返回上一页
     tologin() {
-      this.$router.go(-1);
+      this.$router.push("/login");
     },
     //检查用户名
     check_user() {
       if (this.phone == "") {
-        Toast("用户名不能为空");
-        this.$notify({ type: "danger", message: "用户名不能为空" });
+        Toast("手机号不能为空");
+        this.$notify({ type: "danger", message: "手机号不能为空" });
         return;
       }
-     if (
+      if (
         /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/.test(
           this.phone
         )
       ) {
-        let url =
-          "http://127.0.0.1:8080/v2/user/check_phone?phone=" + this.phone;
+        let url = "/check_phone?phone=" + this.phone;
         this.axios.get(url).then((res) => {
-          console.log(res);
+          // console.log(res);
           if (res.data === "exists") {
             Toast("手机号已被注册");
             this.$notify({ type: "danger", message: "手机号已被注册" });
@@ -205,6 +215,15 @@ export default {
         });
       } else {
         Toast.fail("请输入正确的手机号码");
+      }
+    },
+    //点击切换密码的type类型
+    onPassword() {
+      this.isText = !this.isText;
+      if (this.isText) {
+        this.isPassword = "password";
+      } else {
+        this.isPassword = "text";
       }
     },
     // 提交注册
@@ -220,27 +239,25 @@ export default {
       } else if (this.password != this.password1) {
         Toast("密码输入两次不一致！");
       } else {
-        Toast.success("注册成功");
         this.axios
           .post(
-            "http://127.0.0.1:8080/v2/user/add",
-            `uname=${this.name}&upwd=${this.password}&phone=${this.phone}&avatar=${this.uploader}`
+            "/register",
+            `uname=${this.name}&upwd=${this.password}&phone=${this.phone}&avatar=${this.uploader[0].content}`
           )
           .then((res) => {
             console.log("注册请求", res);
             if (res.data.code == 200) {
+              Toast.success("注册成功");
               this.$toast({
                 message: "注册完成,跳转登录...",
               });
               this.$notify({
                 type: "success",
                 message: "注册成功,3s后返回登录",
-                duration: 3000,
+                duration: 2000,
               });
-              setTimeout(() => {
-                this.$router.go(-1);
-              }, 3000);
-              localStorage.setItem("saveUsername", this.phone);
+              localStorage.setItem("user", this.phone);
+              this.tologin();
             }
           });
       }

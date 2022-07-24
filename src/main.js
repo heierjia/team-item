@@ -8,6 +8,7 @@ import Vant from 'vant';
 import 'vant/lib/index.css';
 import moment from 'moment'
 Vue.prototype.moment = moment
+axios.defaults.baseURL = 'http://127.0.0.1:3000/v2/user'
 Vue.use(VueAxios, axios)
 Vue.use(Vant);
 Vue.config.productionTip = false

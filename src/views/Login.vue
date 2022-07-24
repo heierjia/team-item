@@ -49,7 +49,7 @@
         ]"
       >
         <template #right-icon>
-          <van-icon name="eye-o"  @click="onPassword"/>
+          <van-icon name="eye-o" @click="onPassword" />
         </template>
       </van-field>
 
@@ -84,7 +84,7 @@ export default {
   },
   methods: {
     toregister() {
-      this.$router.go(-1);
+      this.$router.push("/register");
       console.log(this.$router);
     },
     onSubmit() {
@@ -93,27 +93,30 @@ export default {
       if (this.username.trim() == "") {
         return;
       }
-      if (!this.username.match(/^[1][3,5,6,7,8,9][0-9]{9}$/)) {
+      if (this.password.trim() == "") {
         return;
       }
-      if (!this.password.match(/^\w{6,}$/)) {
+      if (!this.username.match(/^1[3-9]\d{9}$/)) {
+        return;
+      }
+      if (!this.password.match(/^\w{6-16}$/)) {
         return;
       }
 
       // 获取数据
-      let users = localStorage.user;
-      if (users) {
-        users = JSON.parse(users);
-        let isLogin = false;
-        users.map((item) => {
-          if (
-            item.username == this.username &&
-            item.password == this.password
-          ) {
-            isLogin = true;
-            return;
-          }
-        });
+      // let users = localStorage.user;
+      // if (users) {
+      //   users = JSON.parse(users);
+      //   let isLogin = false;
+      //   users.map((item) => {
+      //     if (
+      //       item.username == this.username &&
+      //       item.password == this.password
+      //     ) {
+      //       isLogin = true;
+      //       return;
+      //     }
+      //   });
 
         if (isLogin) {
           // sessionStorage.user = this.username;

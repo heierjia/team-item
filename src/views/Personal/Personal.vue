@@ -102,7 +102,7 @@ export default {
       if (!user) {
         this.$router.push("/login");
       }
-      let url = `http://127.0.0.1:8080/v2/user/getinfo?user=${user}`;
+      let url = `/getinfo?user=${user}`;
       // let url = '/Data/userInfo.json'
       this.axios.get(url).then((res) => {
         console.log(res);

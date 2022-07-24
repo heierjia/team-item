@@ -18,11 +18,11 @@
           />
         </template>
       </van-nav-bar>
-      <div class="header-top" v-for="item in userInfo" :key="item.id">
+      <div class="header-top">
         <div class="left">
           <van-image
-            v-if="item.avatar"
-            :src="item.avatar"
+            v-if="userInfo.avatar"
+            :src="userInfo.avatar"
             fit="fill"
             round
             class="img-tx"
@@ -30,7 +30,7 @@
           />
           <div v-else class="img-tx">点击上传头像</div>
           <div>
-            <span class="name">{{ item.user_name }}</span>
+            <span class="name">{{ userInfo.uname }}</span>
             <van-button size="mini" round>+ 状态</van-button>
           </div>
         </div>
@@ -76,18 +76,21 @@ export default {
     ...mapState(["user"]),
   },
   watch: {},
-  // created() {
-  //   // 初始化的时候，如果用户登录了，我才请求获取当前登录用户的信息
-  //   if (this.$store.state.user) {
-  //     this.getUserInfo();
-  //   }
-  // },
+  created() {
+    // 初始化的时候，如果用户登录了，我才请求获取当前登录用户的信息
+    // let user = localStorage.user || this.$store.state;
+    // if (!this.user) {
+    //   this.$toast("获取数据失败");
+    // } else {
+    //   this.$router.push("/login");
+    // }
+  },
   mounted() {
     // location.reload();
     this.getUserInfo();
   },
   methods: {
-    ...mapMutations(["saveUsername"]),
+    ...mapMutations(["saveUsername", "useDetails"]),
     // async loadUser() {
     //   try {
     //     const { data } = await getUserInfo();
@@ -98,17 +101,21 @@ export default {
     //   }
     // },
     getUserInfo() {
-      let user = this.$store.state.user;
-      if (!user) {
+      let user = localStorage.user || this.$store.state;
+      // let user = this.$store.state;
+      console.log("获取信息", user);
+      if (user) {
+        let url = `/getinfo?phone=${user}`;
+        // let url = '/Data/userInfo.json'
+        this.axios.get(url).then((res) => {
+          console.log("result", res);
+          this.userInfo = res.data.data[0];
+          console.log("useDetails", this.userInfo);
+          this.$store.commit("useDetails", this.userInfo);
+        });
+      } else {
         this.$router.push("/login");
       }
-      let url = `/getinfo?user=${user}`;
-      // let url = '/Data/userInfo.json'
-      this.axios.get(url).then((res) => {
-        console.log(res);
-        this.userInfo = res.data;
-        this.$store.commit("userInfo", this.userInfo);
-      });
     },
     // 点击退出登录x
     onLogout() {

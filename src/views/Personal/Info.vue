@@ -17,7 +17,7 @@
         <van-uploader :before-read="beforeRead" upload-text="修改头像" />
         <van-image :src="item.avatar" style="width: 80vw" />
       </van-popup>
-      <van-cell center title="昵称" :value="item.user_name" is-link />
+      <van-cell center title="昵称" :value="item.uname" is-link />
       <van-cell
         center
         title="性别"
@@ -44,11 +44,7 @@ export default {
     };
   },
   mounted() {
-    // console.log("userInfo", this.$store.state.userInfo);
-    for (let item of this.$store.state.userInfo) {
-      console.log(item);
-      this.item = item;
-    }
+    this.item = this.$store.state.userInfo;
   },
   methods: {
     showPopup() {

@@ -3,7 +3,7 @@
     <!-- views/Login.vue -->
     <!-- vant导航栏 -->
     <van-nav-bar
-      @click.native.capture="toregister"
+      @click.native.capture="tologin"
       style="background-color: #3090ec"
       :border="false"
     >
@@ -19,7 +19,7 @@
       round
       width="6rem"
       height="6rem"
-      src="https://img01.yzcdn.cn/vant/cat.jpeg"
+      src="http://img01.yzcdn.cn/vant/cat.jpeg"
       style="margin: 3em"
     />
     <!-- vant表单 登录区 -->
@@ -49,7 +49,7 @@
         ]"
       >
         <template #right-icon>
-          <van-icon name="eye-o" @click="onPassword" />
+          <van-icon name="eye-o" @click.native.capture="onPassword" />
         </template>
       </van-field>
 
@@ -73,6 +73,7 @@
 
 <script>
 import { Toast } from "vant";
+import { mapMutations } from 'vuex';
 export default {
   data() {
     return {
@@ -83,9 +84,10 @@ export default {
     };
   },
   methods: {
-    toregister() {
-      this.$router.push("/register");
-      console.log(this.$router);
+    ...mapMutations(["saveUsername"]),
+    tologin() {
+      this.$router.push("/login");
+      // console.log(this.$router);
     },
     onSubmit() {
       //点击登录
@@ -93,14 +95,38 @@ export default {
       if (this.username.trim() == "") {
         return;
       }
-      if (this.password.trim() == "") {
+      if (!this.username.match(/^[1][3,5,6,7,8,9][0-9]{9}$/)) {
         return;
       }
-      if (!this.username.match(/^1[3-9]\d{9}$/)) {
+      if (!this.password.match(/^\w{6}$/)) {
         return;
       }
-      if (!this.password.match(/^\w{6-16}$/)) {
-        return;
+      if (this.username && this.password) {
+        this.axios
+          .post("/login", `phone=${this.username}&upwd=${this.password}`)
+          .then((res) => {
+            // console.log("登录请求", res);
+            if (res.data.code == 200) {
+              Toast.success("登录成功");
+              this.$notify({
+                type: "success",
+                message: "登录成功,即将跳转至个人中心页面",
+                duration: 1500,
+              });
+              this.$store.commit("saveUsername", this.username);
+              localStorage.setItem("user", this.username);
+              setTimeout(() => {
+                this.$router.push("/personal");
+              }, 1500);
+            } else {
+              this.$notify({
+                type: "danger",
+                message: "登录失败, 输入的账号或密码有误",
+              });
+            }
+          });
+      } else {
+        this.$notify({ type: "danger", message: "该用户不存在" });
       }
 
       // 获取数据
@@ -118,18 +144,18 @@ export default {
       //     }
       //   });
 
-        if (isLogin) {
-          // sessionStorage.user = this.username;
-          this.$store.commit("user", this.user);
-          this.$router.push({
-            path: "/personal",
-          });
-        } else {
-          this.$notify({ type: "danger", message: "输入的账号或密码有误" });
-        }
-      } else {
-        this.$notify({ type: "danger", message: "该用户不存在" });
-      }
+      //   if (isLogin) {
+      //     localStorage.user = this.username;
+      //     localStorage.setItem("user", user);
+      //     this.$router.push({
+      //       path: "/personal",
+      //     });
+      //   } else {
+      //     this.$notify({ type: "danger", message: "输入的账号或密码有误" });
+      //   }
+      // } else {
+      //   this.$notify({ type: "danger", message: "该用户不存在" });
+      // }
     },
     onPassword() {
       //点击切换密码的type类型
@@ -140,12 +166,12 @@ export default {
         this.isPassword = "text";
       }
     },
-    back() {
-      //返回我的页面
-      this.$router.push({
-        path: "/personal",
-      });
-    },
+    // back() {
+    //   //返回我的页面
+    //   this.$router.push({
+    //     path: "/personal",
+    //   });
+    // },
   },
 };
 </script>
@@ -154,9 +180,5 @@ export default {
 <style scoped>
 #login {
   text-align: center;
-}
-.iconfont {
-  background-color: brown;
-  color: red;
 }
 </style>

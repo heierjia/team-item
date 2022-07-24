@@ -254,10 +254,12 @@ export default {
               this.$notify({
                 type: "success",
                 message: "注册成功,3s后返回登录",
-                duration: 2000,
+                duration: 3000,
               });
-              localStorage.setItem("user", this.phone);
-              this.tologin();
+              // localStorage.setItem("user", this.phone);
+              setTimeout(() => {
+                this.tologin();
+              }, 3000);
             }
           });
       }

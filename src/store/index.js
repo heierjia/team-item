@@ -5,19 +5,21 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    // user:sessionStorage.getItem('user'),
+    // user: localStorage.getItem('user'),
     user: '',
     userInfo: [],
   },
   getters: {
   },
   mutations: {
-    userInfo(state, info) {
+    useDetails(state, info) {
       state.userInfo = info
+      // console.log('全局变量info', info);
     },
     saveUsername(state, payload) {
       state.user = payload
-      sessionStorage.setItem('user', payload)
+      localStorage.setItem('user', payload)
+      // console.log('全局变量user', payload);
     },
     onRefresh() {
       setTimeout(() => {
